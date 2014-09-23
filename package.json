@@ -1,0 +1,32 @@
+{
+  "name": "vise",
+  "description": "Treat multiple buffers or strings as one",
+  "version": "1.0.0",
+  "repository": "git://github.com/hapijs/vise",
+  "main": "index",
+  "keywords": [
+    "buffer",
+    "string",
+    "array",
+    "merge",
+    "combine"
+  ],
+  "engines": {
+    "node": ">=0.10.32"
+  },
+  "dependencies": {
+    "hoek": "2.x.x"
+  },
+  "devDependencies": {
+    "lab": "4.x.x"
+  },
+  "scripts": {
+    "test": "make test-cov"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/hapijs/vise/raw/master/LICENSE"
+    }
+  ]
+}
