@@ -149,4 +149,34 @@ describe('Vise', function () {
             done();
         });
     });
+
+    describe('chunks()', function (done) {
+
+        it('returns remaining chunks', function (done) {
+
+            var data = ['abcde', 'fgh', 'ijk'];
+            var vise = new Vise(data);
+            expect(vise.chunks()).to.deep.equal(data);
+
+            vise.shift(2);
+            expect(vise.chunks()).to.deep.equal(['cde', 'fgh', 'ijk']);
+
+            vise.shift(2);
+            expect(vise.chunks()).to.deep.equal(['e', 'fgh', 'ijk']);
+
+            vise.shift(0);
+            expect(vise.chunks()).to.deep.equal(['e', 'fgh', 'ijk']);
+
+            vise.shift(1);
+            expect(vise.chunks()).to.deep.equal(['fgh', 'ijk']);
+
+            vise.shift(4);
+            expect(vise.chunks()).to.deep.equal(['jk']);
+
+            vise.shift(4);
+            expect(vise.chunks()).to.deep.equal([]);
+
+            done();
+        });
+    });
 });
