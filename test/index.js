@@ -201,6 +201,13 @@ describe('Vise', function () {
             done();
         });
 
+        it('compares single chunk (subset)', function (done) {
+
+            var vise = new Vise(new Buffer('abcdefghijkl'));
+            expect(vise.startsWith(new Buffer('abce'), 0, 3)).to.equal(true);
+            done();
+        });
+
         it('compares single chunk (different)', function (done) {
 
             var vise = new Vise(new Buffer('abcdefghijkl'));
