@@ -1,12 +1,11 @@
 {
   "name": "vise",
-  "description": "Treat multiple buffers or strings as one",
+  "description": "Treat multiple buffers as one",
   "version": "1.0.0",
   "repository": "git://github.com/hapijs/vise",
   "main": "index",
   "keywords": [
     "buffer",
-    "string",
     "array",
     "merge",
     "combine"
