@@ -96,6 +96,16 @@ describe('Vise', function () {
         done();
     });
 
+    describe('length', function () {
+
+        it('reflects total legnth', function (done) {
+
+            var vise = new Vise(['abcdefghijklmn', 'opqrstuvwxyz']);
+            expect(vise.length).to.equal(26);
+            done();
+        });
+    });
+
     describe('push()', function () {
 
         it('adds a string', function (done) {
@@ -128,23 +138,49 @@ describe('Vise', function () {
             var vise = new Vise(data);
             validate(vise, 'abcdefghijk');
 
-            vise.shift(2);
+            expect(vise.shift(2)).to.deep.equal(['ab']);
             validate(vise, 'cdefghijk');
 
-            vise.shift(2);
+            expect(vise.shift(2)).to.deep.equal(['cd']);
             validate(vise, 'efghijk');
 
-            vise.shift(0);
+            expect(vise.shift(0)).to.deep.equal([]);
             validate(vise, 'efghijk');
 
-            vise.shift(1);
+            expect(vise.shift(1)).to.deep.equal(['e']);
             validate(vise, 'fghijk');
 
-            vise.shift(4);
+            expect(vise.shift(4)).to.deep.equal(['fgh', 'i']);
             validate(vise, 'jk');
 
-            vise.shift(4);
+            expect(vise.shift(4)).to.deep.equal(['jk']);
             validate(vise, '');
+
+            done();
+        });
+
+        it('keeps track of chunks offset', function (done) {
+
+            var vise = new Vise();
+
+            vise.push('acb123de');
+            vise.shift(3);
+            vise.shift(3);
+            vise.push('fg12');
+            vise.push('3hij1');
+
+            validate(vise, 'defg123hij1');
+            done();
+        });
+
+        it('removes multiple chunks', function (done) {
+
+            var data = ['abcde', 'fgh', 'ijk'];
+            var vise = new Vise(data);
+            validate(vise, 'abcdefghijk');
+
+            vise.shift(10);
+            validate(vise, 'k');
 
             done();
         });
