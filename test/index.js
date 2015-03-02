@@ -1,5 +1,6 @@
 // Load modules
 
+var Code = require('code');
 var Lab = require('lab');
 var Vise = require('..');
 
@@ -14,7 +15,7 @@ var internals = {};
 var lab = exports.lab = Lab.script();
 var describe = lab.describe;
 var it = lab.it;
-var expect = Lab.expect;
+var expect = Code.expect;
 
 
 describe('Vise', function () {
