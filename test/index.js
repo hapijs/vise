@@ -117,22 +117,22 @@ describe('Vise', () => {
             const vise = new Vise(data);
             validate(vise, 'abcdefghijk');
 
-            expect(vise.shift(2)).to.deep.equal([new Buffer('ab')]);
+            expect(vise.shift(2)).to.equal([new Buffer('ab')]);
             validate(vise, 'cdefghijk');
 
-            expect(vise.shift(2)).to.deep.equal([new Buffer('cd')]);
+            expect(vise.shift(2)).to.equal([new Buffer('cd')]);
             validate(vise, 'efghijk');
 
-            expect(vise.shift(0)).to.deep.equal([]);
+            expect(vise.shift(0)).to.equal([]);
             validate(vise, 'efghijk');
 
-            expect(vise.shift(1)).to.deep.equal([new Buffer('e')]);
+            expect(vise.shift(1)).to.equal([new Buffer('e')]);
             validate(vise, 'fghijk');
 
-            expect(vise.shift(4)).to.deep.equal([new Buffer('fgh'), new Buffer('i')]);
+            expect(vise.shift(4)).to.equal([new Buffer('fgh'), new Buffer('i')]);
             validate(vise, 'jk');
 
-            expect(vise.shift(4)).to.deep.equal([new Buffer('jk')]);
+            expect(vise.shift(4)).to.equal([new Buffer('jk')]);
             validate(vise, '');
 
             done();
@@ -171,25 +171,25 @@ describe('Vise', () => {
 
             const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
             const vise = new Vise(data);
-            expect(vise.chunks()).to.deep.equal(data);
+            expect(vise.chunks()).to.equal(data);
 
             vise.shift(2);
-            expect(vise.chunks()).to.deep.equal([new Buffer('cde'), new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([new Buffer('cde'), new Buffer('fgh'), new Buffer('ijk')]);
 
             vise.shift(2);
-            expect(vise.chunks()).to.deep.equal([new Buffer('e'), new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([new Buffer('e'), new Buffer('fgh'), new Buffer('ijk')]);
 
             vise.shift(0);
-            expect(vise.chunks()).to.deep.equal([new Buffer('e'), new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([new Buffer('e'), new Buffer('fgh'), new Buffer('ijk')]);
 
             vise.shift(1);
-            expect(vise.chunks()).to.deep.equal([new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([new Buffer('fgh'), new Buffer('ijk')]);
 
             vise.shift(4);
-            expect(vise.chunks()).to.deep.equal([new Buffer('jk')]);
+            expect(vise.chunks()).to.equal([new Buffer('jk')]);
 
             vise.shift(4);
-            expect(vise.chunks()).to.deep.equal([]);
+            expect(vise.chunks()).to.equal([]);
 
             done();
         });
