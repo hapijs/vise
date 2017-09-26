@@ -14,9 +14,7 @@ const internals = {};
 
 // Test shortcuts
 
-const lab = exports.lab = Lab.script();
-const describe = lab.describe;
-const it = lab.it;
+const { describe, it } = exports.lab = Lab.script();
 const expect = Code.expect;
 
 
@@ -40,54 +38,48 @@ describe('Vise', () => {
         }
     };
 
-    it('combines buffers', (done) => {
+    it('combines buffers', async () => {
 
         const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
         const vise = new Vise(data);
         validate(vise, 'abcdefghijk');
-        done();
     });
 
-    it('combines single buffer', (done) => {
+    it('combines single buffer', async () => {
 
         const data = new Buffer('abcde');
         const vise = new Vise(data);
         expect(vise.length).to.equal(5);
         validate(vise, 'abcde');
-        done();
     });
 
-    it('allows empty input', (done) => {
+    it('allows empty input', async () => {
 
         const vise = new Vise();
         expect(vise.length).to.equal(0);
         expect(vise.at(0)).to.equal(undefined);
-        done();
     });
 
-    it('throws on invalid input', (done) => {
+    it('throws on invalid input', async () => {
 
         expect(() => {
 
             new Vise(123);
         }).to.throw('Chunk must be a buffer');
-
-        done();
     });
 
     describe('length', () => {
 
-        it('reflects total legnth', (done) => {
+        it('reflects total legnth', async () => {
 
             const vise = new Vise([new Buffer('abcdefghijklmn'), new Buffer('opqrstuvwxyz')]);
             expect(vise.length).to.equal(26);
-            done();
         });
     });
 
     describe('push()', () => {
 
-        it('adds a string', (done) => {
+        it('adds a string', async () => {
 
             const data = [new Buffer('abcde'), new Buffer('fgh')];
             const vise = new Vise(data);
@@ -95,23 +87,21 @@ describe('Vise', () => {
 
             vise.push(new Buffer('ijk'));
             validate(vise, 'abcdefghijk');
-            done();
         });
 
-        it('adds to empty array', (done) => {
+        it('adds to empty array', async () => {
 
             const vise = new Vise();
             expect(vise.length).to.equal(0);
             expect(vise.at(0)).to.equal(undefined);
             vise.push(new Buffer('abcde'));
             validate(vise, 'abcde');
-            done();
         });
     });
 
-    describe('shift()', (done) => {
+    describe('shift()', async () => {
 
-        it('removes chunks', (done) => {
+        it('removes chunks', async () => {
 
             const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
             const vise = new Vise(data);
@@ -134,11 +124,9 @@ describe('Vise', () => {
 
             expect(vise.shift(4)).to.equal([new Buffer('jk')]);
             validate(vise, '');
-
-            done();
         });
 
-        it('keeps track of chunks offset', (done) => {
+        it('keeps track of chunks offset', async () => {
 
             const vise = new Vise();
 
@@ -149,10 +137,9 @@ describe('Vise', () => {
             vise.push(new Buffer('3hij1'));
 
             validate(vise, 'defg123hij1');
-            done();
         });
 
-        it('removes multiple chunks', (done) => {
+        it('removes multiple chunks', async () => {
 
             const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
             const vise = new Vise(data);
@@ -160,14 +147,12 @@ describe('Vise', () => {
 
             vise.shift(10);
             validate(vise, 'k');
-
-            done();
         });
     });
 
-    describe('chunks()', (done) => {
+    describe('chunks()', async () => {
 
-        it('returns remaining chunks', (done) => {
+        it('returns remaining chunks', async () => {
 
             const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
             const vise = new Vise(data);
@@ -190,74 +175,63 @@ describe('Vise', () => {
 
             vise.shift(4);
             expect(vise.chunks()).to.equal([]);
-
-            done();
         });
     });
 
     describe('startsWith()', () => {
 
-        it('compares single chunk (smaller)', (done) => {
+        it('compares single chunk (smaller)', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('abcd'))).to.equal(true);
-            done();
         });
 
-        it('compares single chunk (subset)', (done) => {
+        it('compares single chunk (subset)', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('abce'), 0, 3)).to.equal(true);
-            done();
         });
 
-        it('compares single chunk (different)', (done) => {
+        it('compares single chunk (different)', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('asd'))).to.equal(false);
-            done();
         });
 
-        it('compares single chunk (offset)', (done) => {
+        it('compares single chunk (offset)', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('bcd'), 1)).to.equal(true);
-            done();
         });
 
-        it('compares single chunk (same)', (done) => {
+        it('compares single chunk (same)', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('abcdefghijkl'))).to.equal(true);
-            done();
         });
 
-        it('compares single chunk (bigger)', (done) => {
+        it('compares single chunk (bigger)', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('abcdefghijklx'))).to.equal(false);
-            done();
         });
 
-        it('compares multiple chunks', (done) => {
+        it('compares multiple chunks', async () => {
 
             const vise = new Vise([new Buffer('a'), new Buffer('b'), new Buffer('cdefghijkl')]);
             expect(vise.startsWith(new Buffer('abcd'))).to.equal(true);
-            done();
         });
 
-        it('compares multiple chunks (mismatch)', (done) => {
+        it('compares multiple chunks (mismatch)', async () => {
 
             const vise = new Vise([new Buffer('a'), new Buffer('b'), new Buffer('cdefghijkl')]);
             expect(vise.startsWith(new Buffer('acd'))).to.equal(false);
-            done();
         });
 
-        it('compares with invalid offset', (done) => {
+        it('compares with invalid offset', async () => {
 
             const vise = new Vise(new Buffer('abcdefghijkl'));
             expect(vise.startsWith(new Buffer('bcd'), -1)).to.equal(false);
-            done();
         });
     });
 });
