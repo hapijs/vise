@@ -40,14 +40,14 @@ describe('Vise', () => {
 
     it('combines buffers', () => {
 
-        const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
+        const data = [Buffer.from('abcde'), Buffer.from('fgh'), Buffer.from('ijk')];
         const vise = new Vise(data);
         validate(vise, 'abcdefghijk');
     });
 
     it('combines single buffer', () => {
 
-        const data = new Buffer('abcde');
+        const data = Buffer.from('abcde');
         const vise = new Vise(data);
         expect(vise.length).to.equal(5);
         validate(vise, 'abcde');
@@ -72,7 +72,7 @@ describe('Vise', () => {
 
         it('reflects total legnth', () => {
 
-            const vise = new Vise([new Buffer('abcdefghijklmn'), new Buffer('opqrstuvwxyz')]);
+            const vise = new Vise([Buffer.from('abcdefghijklmn'), Buffer.from('opqrstuvwxyz')]);
             expect(vise.length).to.equal(26);
         });
     });
@@ -81,11 +81,11 @@ describe('Vise', () => {
 
         it('adds a string', () => {
 
-            const data = [new Buffer('abcde'), new Buffer('fgh')];
+            const data = [Buffer.from('abcde'), Buffer.from('fgh')];
             const vise = new Vise(data);
             validate(vise, 'abcdefgh');
 
-            vise.push(new Buffer('ijk'));
+            vise.push(Buffer.from('ijk'));
             validate(vise, 'abcdefghijk');
         });
 
@@ -94,7 +94,7 @@ describe('Vise', () => {
             const vise = new Vise();
             expect(vise.length).to.equal(0);
             expect(vise.at(0)).to.equal(undefined);
-            vise.push(new Buffer('abcde'));
+            vise.push(Buffer.from('abcde'));
             validate(vise, 'abcde');
         });
     });
@@ -103,26 +103,26 @@ describe('Vise', () => {
 
         it('removes chunks', () => {
 
-            const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
+            const data = [Buffer.from('abcde'), Buffer.from('fgh'), Buffer.from('ijk')];
             const vise = new Vise(data);
             validate(vise, 'abcdefghijk');
 
-            expect(vise.shift(2)).to.equal([new Buffer('ab')]);
+            expect(vise.shift(2)).to.equal([Buffer.from('ab')]);
             validate(vise, 'cdefghijk');
 
-            expect(vise.shift(2)).to.equal([new Buffer('cd')]);
+            expect(vise.shift(2)).to.equal([Buffer.from('cd')]);
             validate(vise, 'efghijk');
 
             expect(vise.shift(0)).to.equal([]);
             validate(vise, 'efghijk');
 
-            expect(vise.shift(1)).to.equal([new Buffer('e')]);
+            expect(vise.shift(1)).to.equal([Buffer.from('e')]);
             validate(vise, 'fghijk');
 
-            expect(vise.shift(4)).to.equal([new Buffer('fgh'), new Buffer('i')]);
+            expect(vise.shift(4)).to.equal([Buffer.from('fgh'), Buffer.from('i')]);
             validate(vise, 'jk');
 
-            expect(vise.shift(4)).to.equal([new Buffer('jk')]);
+            expect(vise.shift(4)).to.equal([Buffer.from('jk')]);
             validate(vise, '');
         });
 
@@ -130,18 +130,18 @@ describe('Vise', () => {
 
             const vise = new Vise();
 
-            vise.push(new Buffer('acb123de'));
+            vise.push(Buffer.from('acb123de'));
             vise.shift(3);
             vise.shift(3);
-            vise.push(new Buffer('fg12'));
-            vise.push(new Buffer('3hij1'));
+            vise.push(Buffer.from('fg12'));
+            vise.push(Buffer.from('3hij1'));
 
             validate(vise, 'defg123hij1');
         });
 
         it('removes multiple chunks', () => {
 
-            const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
+            const data = [Buffer.from('abcde'), Buffer.from('fgh'), Buffer.from('ijk')];
             const vise = new Vise(data);
             validate(vise, 'abcdefghijk');
 
@@ -154,24 +154,24 @@ describe('Vise', () => {
 
         it('returns remaining chunks', () => {
 
-            const data = [new Buffer('abcde'), new Buffer('fgh'), new Buffer('ijk')];
+            const data = [Buffer.from('abcde'), Buffer.from('fgh'), Buffer.from('ijk')];
             const vise = new Vise(data);
             expect(vise.chunks()).to.equal(data);
 
             vise.shift(2);
-            expect(vise.chunks()).to.equal([new Buffer('cde'), new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([Buffer.from('cde'), Buffer.from('fgh'), Buffer.from('ijk')]);
 
             vise.shift(2);
-            expect(vise.chunks()).to.equal([new Buffer('e'), new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([Buffer.from('e'), Buffer.from('fgh'), Buffer.from('ijk')]);
 
             vise.shift(0);
-            expect(vise.chunks()).to.equal([new Buffer('e'), new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([Buffer.from('e'), Buffer.from('fgh'), Buffer.from('ijk')]);
 
             vise.shift(1);
-            expect(vise.chunks()).to.equal([new Buffer('fgh'), new Buffer('ijk')]);
+            expect(vise.chunks()).to.equal([Buffer.from('fgh'), Buffer.from('ijk')]);
 
             vise.shift(4);
-            expect(vise.chunks()).to.equal([new Buffer('jk')]);
+            expect(vise.chunks()).to.equal([Buffer.from('jk')]);
 
             vise.shift(4);
             expect(vise.chunks()).to.equal([]);
@@ -182,56 +182,56 @@ describe('Vise', () => {
 
         it('compares single chunk (smaller)', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('abcd'))).to.equal(true);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('abcd'))).to.equal(true);
         });
 
         it('compares single chunk (subset)', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('abce'), 0, 3)).to.equal(true);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('abce'), 0, 3)).to.equal(true);
         });
 
         it('compares single chunk (different)', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('asd'))).to.equal(false);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('asd'))).to.equal(false);
         });
 
         it('compares single chunk (offset)', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('bcd'), 1)).to.equal(true);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('bcd'), 1)).to.equal(true);
         });
 
         it('compares single chunk (same)', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('abcdefghijkl'))).to.equal(true);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('abcdefghijkl'))).to.equal(true);
         });
 
         it('compares single chunk (bigger)', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('abcdefghijklx'))).to.equal(false);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('abcdefghijklx'))).to.equal(false);
         });
 
         it('compares multiple chunks', () => {
 
-            const vise = new Vise([new Buffer('a'), new Buffer('b'), new Buffer('cdefghijkl')]);
-            expect(vise.startsWith(new Buffer('abcd'))).to.equal(true);
+            const vise = new Vise([Buffer.from('a'), Buffer.from('b'), Buffer.from('cdefghijkl')]);
+            expect(vise.startsWith(Buffer.from('abcd'))).to.equal(true);
         });
 
         it('compares multiple chunks (mismatch)', () => {
 
-            const vise = new Vise([new Buffer('a'), new Buffer('b'), new Buffer('cdefghijkl')]);
-            expect(vise.startsWith(new Buffer('acd'))).to.equal(false);
+            const vise = new Vise([Buffer.from('a'), Buffer.from('b'), Buffer.from('cdefghijkl')]);
+            expect(vise.startsWith(Buffer.from('acd'))).to.equal(false);
         });
 
         it('compares with invalid offset', () => {
 
-            const vise = new Vise(new Buffer('abcdefghijkl'));
-            expect(vise.startsWith(new Buffer('bcd'), -1)).to.equal(false);
+            const vise = new Vise(Buffer.from('abcdefghijkl'));
+            expect(vise.startsWith(Buffer.from('bcd'), -1)).to.equal(false);
         });
     });
 });
