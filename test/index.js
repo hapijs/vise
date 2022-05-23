@@ -2,7 +2,7 @@
 
 const Code = require('@hapi/code');
 const Lab = require('@hapi/lab');
-const Vise = require('..');
+const { Vise } = require('..');
 
 
 const internals = {};
