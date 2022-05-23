@@ -1,7 +1,7 @@
 {
   "name": "@hapi/vise",
   "description": "Treat multiple buffers as one",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "repository": "git://github.com/hapijs/vise",
   "main": "lib/index.js",
   "files": [
