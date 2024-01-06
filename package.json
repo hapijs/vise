@@ -1,7 +1,7 @@
 {
   "name": "vise",
   "description": "Treat multiple buffers as one",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "repository": "git://github.com/hapijs/vise",
   "engines": {
     "node": ">=6.0.0"
