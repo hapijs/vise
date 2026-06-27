@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import * as Vise from '../lib/index.js';
+import * as Vise from '../src/index.mjs';
 
 describe('import()', () => {
     it('exposes all classes as named imports', () => {

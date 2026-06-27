@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Vise } from '../lib/index.js';
+import { Vise } from '../src/index.mjs';
 
 describe('Vise', () => {
     const validate = function (vise, content) {
