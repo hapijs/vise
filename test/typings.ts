@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import { Vise } from '../src/index.mjs';
+import { Vise } from '../src/index.js';
 
 describe('typings', () => {
     it('Vise surface compiles', () => {
