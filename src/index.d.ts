@@ -1,7 +1,7 @@
 /** A vise combines multiple buffers into a single, addressable virtual buffer. */
 export class Vise {
     /** The combined length of all the buffers held by the vise. */
-    length: number;
+    readonly length: number;
 
     /**
      * Creates a new Vise.
