@@ -1,6 +1,6 @@
 {
     "name": "@hapi/vise",
-    "version": "5.0.1",
+    "version": "6.0.0-rc.0",
     "description": "Treat multiple buffers as one",
     "keywords": [
         "array",
