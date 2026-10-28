@@ -11,8 +11,7 @@
     "license": "BSD-3-Clause",
     "repository": "git://github.com/hapijs/vise",
     "files": [
-        "src",
-        "README.md"
+        "src"
     ],
     "type": "module",
     "types": "src/index.d.ts",
