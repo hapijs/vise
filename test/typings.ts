@@ -22,6 +22,11 @@ describe('typings', () => {
         it('is a number', () => {
             expectTypeOf(new Vise().length).toBeNumber();
         });
+
+        it('invalid calls rejected', () => {
+            // @ts-expect-error length is readonly
+            new Vise().length = 1;
+        });
     });
 
     describe('push()', () => {
